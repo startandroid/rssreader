@@ -1,8 +1,7 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -10,13 +9,13 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.startandroid.rssreader"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -32,37 +31,24 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        viewBinding true
-        dataBinding true
-    }
 }
 
 dependencies {
+
     implementation project(path: ':domain')
-    implementation project(path: ':data')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation core.coreKtx
-    implementation activity.activityKtx
-    implementation fragment.fragmentKtx
     implementation appcompat.appcompat
-    implementation lifecycle.lifecycleLiveDataKtx
     implementation material.material
-    implementation constraintlayout.constraintlayout
+    implementation retrofit2.retrofit
+    implementation retrofit2.converterXml
+    implementation retrofit2.converterJaxb
+    implementation retrofit2.converterScalars
 
     implementation dagger.hiltAndroid
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt dagger.hiltCompiler
-
-    implementation kotlinx.coroutinesCore
-    implementation kotlinx.coroutinesAndroid
-    implementation kotlinn.reflect
-    implementation kotlinx.serializationJson
-
-    implementation coil.coil
 
     testImplementation junit.junit
     androidTestImplementation testExt.junit
-    androidTestImplementation espresso.espressoCore
 }
