@@ -23,6 +23,10 @@ class NavigationHelper @Inject constructor(): NavigationEventProvider {
         postEvent(NavigationFragmentEvent(cls, NavigationFragmentAction.REPLACE, arguments = arguments))
     }
 
+    fun back() {
+        postEvent(Back)
+    }
+
     private fun postEvent(event: NavigationEvent) {
         _events.tryEmit(event)
     }

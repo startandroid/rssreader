@@ -9,19 +9,23 @@ import javax.xml.bind.annotation.XmlRootElement
 @Root(name = "rss", strict = false)
 class FeedApi @JvmOverloads constructor(
     @field: Element(name = "channel")
-    var channel: Channel = Channel()
+    var channel: Channel = Channel(),
+
+
 )
 
 @Root(name = "channel", strict = false)
 class Channel @JvmOverloads constructor(
 
-    @field: Element(name = "title")
+    var feedUrl: String = "",
+
+    @field: Element(name = "title", required = false)
     var title: String = "",
 
-    @field: Element(name = "description")
+    @field: Element(name = "description", required = false)
     var description: String = "",
 
-    @field: Element(name = "image")
+    @field: Element(name = "image", required = false)
     var image: Image = Image(),
 
     @field: ElementList(inline = true)

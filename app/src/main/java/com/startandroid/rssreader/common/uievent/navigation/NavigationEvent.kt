@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import kotlin.reflect.KClass
 
 sealed class NavigationEvent
+
 data class NavigationFragmentEvent(
     val kls: KClass<out Fragment>,
     val action: NavigationFragmentAction = NavigationFragmentAction.REPLACE,
@@ -14,3 +15,5 @@ data class NavigationFragmentEvent(
 enum class NavigationFragmentAction {
     ADD, REPLACE
 }
+
+object Back: NavigationEvent()

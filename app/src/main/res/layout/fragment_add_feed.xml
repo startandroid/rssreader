@@ -7,14 +7,14 @@
 
         <variable
             name="state"
-            type="com.startandroid.rssreader.feed.FeedViewModelState" />
+            type="com.startandroid.rssreader.feed.add.AddFeedUiState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
-        tools:context=".feed.AddFeedFragment">
+        tools:context=".feed.add.AddFeedFragment">
 
         <EditText
             android:id="@+id/editTextUrl"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:hint="Input feed url"
             android:inputType="textUri"
-            android:text="https://blog.jetbrains.com/kotlin/feed/"
+            android:text="https://antonioleiva.com/feed/"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

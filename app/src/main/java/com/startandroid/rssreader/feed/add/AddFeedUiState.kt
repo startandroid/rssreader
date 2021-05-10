@@ -1,8 +1,8 @@
-package com.startandroid.rssreader.feed
+package com.startandroid.rssreader.feed.add
 
 import android.view.View
 
-data class FeedViewModelState(
+data class AddFeedUiState(
     val titleText: String = "",
     val descriptionText: String = "",
     val imageUrl: String = "",

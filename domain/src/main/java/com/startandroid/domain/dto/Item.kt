@@ -7,5 +7,6 @@ data class Item(
     val title: String = "",
     val description: String = "",
     val imageUrl: String = "",
-    val link: String = ""
+    val link: String = "",
+    val datetime: Long = 0
 )

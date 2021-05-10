@@ -3,17 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".item.preview.ItemsPreviewFragment">
+    tools:context=".item.list.ItemListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <ProgressBar
-        android:id="@+id/progressBarLoading"
-        android:layout_gravity="center"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabFeeds"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@android:drawable/sym_contact_card"
+        android:layout_margin="16dp" />
 
 </FrameLayout>

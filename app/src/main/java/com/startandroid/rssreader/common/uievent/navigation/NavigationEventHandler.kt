@@ -11,6 +11,7 @@ class NavigationEventHandler @Inject constructor(
     fun handle(event: NavigationEvent) {
         when (event) {
             is NavigationFragmentEvent -> handleFragment(event)
+            Back -> handleBack()
         }
     }
 
@@ -28,5 +29,9 @@ class NavigationEventHandler @Inject constructor(
                 }
             }.addToBackStack(event.kls.simpleName)
             .commit()
+    }
+
+    private fun handleBack() {
+        fragment.activity?.onBackPressed()
     }
 }

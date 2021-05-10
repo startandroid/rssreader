@@ -1,15 +1,15 @@
-package com.startandroid.rssreader.feed.item.adapter
+package com.startandroid.rssreader.item.preview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.startandroid.domain.dto.Item
-import com.startandroid.rssreader.databinding.FeedItemBinding
+import com.startandroid.rssreader.databinding.FeedItemRowBinding
 import javax.inject.Inject
 
 class ItemAdapter @Inject constructor(): RecyclerView.Adapter<ItemHolder>() {
 
-    private val _data: MutableList<Item> = mutableListOf()
+    private val _data = mutableListOf<Item>()
 
     fun setData(data: List<Item>?) {
         _data.apply {
@@ -20,7 +20,7 @@ class ItemAdapter @Inject constructor(): RecyclerView.Adapter<ItemHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
-        return ItemHolder(FeedItemBinding.inflate(LayoutInflater.from(parent.context)))
+        return ItemHolder(FeedItemRowBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {

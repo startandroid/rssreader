@@ -1,24 +1,29 @@
-package com.startandroid.rssreader.feed
+package com.startandroid.rssreader.feed.add
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.startandroid.domain.dto.Feed
+import com.startandroid.domain.usecase.AddFeedUseCase
 import com.startandroid.domain.usecase.FetchFeedUseCase
 import com.startandroid.rssreader.common.*
 import com.startandroid.rssreader.common.state.StateProvider
 import com.startandroid.rssreader.common.uievent.navigation.NavigationEventProvider
 import com.startandroid.rssreader.common.uievent.navigation.NavigationHelper
 import com.startandroid.rssreader.common.uievent.toast.ToastEventProvider
-import com.startandroid.rssreader.feed.item.ItemListPreviewFragment
+import com.startandroid.rssreader.item.preview.ItemsPreviewFragment
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FeedViewModel(
+@HiltViewModel
+class AddFeedViewModel @Inject constructor(
     private val fetchFeedUseCase: FetchFeedUseCase,
-    private val state: FeedStateFromResult,
+    private val addFeedUseCase: AddFeedUseCase,
+    private val state: AddFeedUiStateProvider,
     private val toast: ToastHelper,
     private val navigation: NavigationHelper
 ) : ViewModel(),
-    StateProvider<FeedViewModelState> by state,
+    StateProvider<AddFeedUiState> by state,
     ToastEventProvider by toast,
     NavigationEventProvider by navigation
 {
@@ -42,7 +47,14 @@ class FeedViewModel(
     }
 
     fun onPreviewClick() {
-        navigation.replaceFragment(ItemListPreviewFragment::class, ItemListPreviewFragment.createArguments(lastFeed?.itemList))
+        navigation.replaceFragment(ItemsPreviewFragment::class, ItemsPreviewFragment.feedArgs(lastFeed?.url))
+    }
+
+    fun onAddClick() {
+        viewModelScope.launch {
+            lastFeed?.url?.let { addFeedUseCase.invoke(it) }
+            navigation.back()
+        }
     }
 
 }

@@ -41,7 +41,9 @@ ext.versions = [
         daggerHilt      : "2.33-beta",
         coroutines      : "1.4.1",
         coil            : "1.2.1",
-        serialization   : "1.1.0"
+        serialization   : "1.1.0",
+        room            : "2.3.0",
+        paging         : "3.0.0"
 ]
 
 ext.core = [
@@ -109,5 +111,15 @@ ext.kotlinn = [
 
 ext.coil = [
         coil: "io.coil-kt:coil:$versions.coil"
+]
+
+ext.room = [
+        roomRuntime: "androidx.room:room-runtime:$versions.room",
+        roomCompiler: "androidx.room:room-compiler:$versions.room",
+        roomKtx: "androidx.room:room-ktx:$versions.room"
+]
+
+ext.paging = [
+        pagingRuntime: "androidx.paging:paging-runtime:$versions.paging"
 ]
 

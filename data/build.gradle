@@ -49,6 +49,11 @@ dependencies {
     implementation dagger.hiltAndroid
     kapt dagger.hiltCompiler
 
+    implementation room.roomRuntime
+    kapt room.roomCompiler
+    implementation room.roomKtx
+    implementation paging.pagingRuntime
+
     testImplementation junit.junit
     androidTestImplementation testExt.junit
 }

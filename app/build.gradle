@@ -60,7 +60,11 @@ dependencies {
     implementation kotlinn.reflect
     implementation kotlinx.serializationJson
 
+    implementation room.roomRuntime
+
     implementation coil.coil
+
+    implementation paging.pagingRuntime
 
     testImplementation junit.junit
     androidTestImplementation testExt.junit

@@ -1,4 +1,4 @@
-package com.startandroid.rssreader.feed
+package com.startandroid.rssreader.feed.add
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,10 +16,9 @@ import javax.inject.Inject
 class AddFeedFragment : Fragment() {
 
     @Inject lateinit var viewModelUiEventHandler: ViewModelUiEventHandler
-    @Inject lateinit var provider: FeedViewModelProvider
 
     private var binding: FragmentAddFeedBinding? = null
-    private val feedModel: FeedViewModel by viewModels { provider }
+    private val addFeedModel: AddFeedViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAddFeedBinding.inflate(inflater, container, false)
@@ -29,18 +28,15 @@ class AddFeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as? AppCompatActivity)?.supportActionBar?.run {
-            title = "Add feed"
-            setDisplayHomeAsUpEnabled(false)
-        }
+        (activity as? AppCompatActivity)?.supportActionBar?.title = "Add feed"
 
-        binding?.buttonCheck?.setOnClickListener { feedModel.onCheckClick(binding?.editTextUrl?.text?.toString()) }
-        binding?.buttonAdd?.setOnClickListener { }
-        binding?.buttonPreview?.setOnClickListener { feedModel.onPreviewClick() }
+        binding?.buttonCheck?.setOnClickListener { addFeedModel.onCheckClick(binding?.editTextUrl?.text?.toString()) }
+        binding?.buttonAdd?.setOnClickListener { addFeedModel.onAddClick() }
+        binding?.buttonPreview?.setOnClickListener { addFeedModel.onPreviewClick() }
 
-        feedModel.state().observe(viewLifecycleOwner) { binding?.state = it }
+        addFeedModel.state().observe(viewLifecycleOwner) { binding?.state = it }
 
-        viewModelUiEventHandler.collectEvents(feedModel)
+        viewModelUiEventHandler.collectEvents(addFeedModel)
     }
 
     override fun onDestroyView() {

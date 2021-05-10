@@ -1,4 +1,4 @@
-package com.startandroid.rssreader.feed.item
+package com.startandroid.rssreader.item.preview
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,38 +6,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.startandroid.domain.dto.Item
-import com.startandroid.rssreader.common.getKSerializable
-import com.startandroid.rssreader.common.putKSerializable
 import com.startandroid.rssreader.databinding.FragmentItemListPreviewBinding
-import com.startandroid.rssreader.feed.item.adapter.ItemAdapter
+import com.startandroid.rssreader.item.preview.adapter.ItemAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ItemListPreviewFragment : Fragment() {
-
-    @Inject
-    lateinit var itemAdapter: ItemAdapter
-
-    var binding: FragmentItemListPreviewBinding? = null
+class ItemsPreviewFragment : Fragment() {
 
     companion object {
-        const val KEY_ITEM_LIST = "itemList"
+        const val KEY_FEED_URL = "feedUrl"
 
-        fun createArguments(itemList: List<Item>?): Bundle? {
-            return itemList?.let { Bundle().apply { putKSerializable(KEY_ITEM_LIST, itemList) } }
+        fun feedArgs(feedUrl: String?): Bundle? {
+            return feedUrl?.let { Bundle().apply { putString(KEY_FEED_URL, it) } }
         }
     }
+
+    @Inject lateinit var itemAdapter: ItemAdapter
+    private val itemsModel: ItemsPreviewViewModel by viewModels()
+    private var binding: FragmentItemListPreviewBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            itemAdapter.setData(it.getKSerializable(KEY_ITEM_LIST))
+            val url = it.getString(KEY_FEED_URL)
+            itemsModel.fetch(url)
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,15 +45,17 @@ class ItemListPreviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as? AppCompatActivity)?.supportActionBar?.run {
-            title = "Preview"
-            setDisplayHomeAsUpEnabled(true)
-        }
+        (activity as? AppCompatActivity)?.supportActionBar?.title = "Items preview"
 
-        binding?.recyclerView?.run {
+        binding?.recyclerViewData?.run {
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
             adapter = itemAdapter
+        }
+
+        itemsModel.state().observe(viewLifecycleOwner) {
+            binding?.progressBarLoading?.visibility = it.loadingVisibility
+            itemAdapter.setData(it.items)
         }
     }
 
@@ -65,5 +64,6 @@ class ItemListPreviewFragment : Fragment() {
         binding = null
     }
 
-}
 
+
+}
