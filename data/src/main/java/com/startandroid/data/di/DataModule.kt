@@ -19,7 +19,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Singleton
 
@@ -74,14 +73,17 @@ class DataModule {
     }
 
     @Provides
-    fun provideDateTimeFormatter(): MutableList<SimpleDateFormat> {
+    fun provideParseDateTimeFormatterList(): MutableList<SimpleDateFormat> {
         return mutableListOf(
             SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.getDefault()),
             SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
         )
     }
 
-
+    @Provides
+    fun provideDateTimeFormatter(): SimpleDateFormat {
+        return SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
+    }
 
 
 

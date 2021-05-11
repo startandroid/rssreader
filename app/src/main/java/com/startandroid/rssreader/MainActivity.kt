@@ -50,12 +50,13 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             feedRepository.clean()
             listOf(
-                "https://antonioleiva.com/feed/",
-                "https://blog.jetbrains.com/kotlin/feed/",
-//                "https://www.buzzfeed.com/world.xml",
-//                "http://rss.cnn.com/rss/edition_world.rss",
-//                "http://yahoo.com/news/rss/world",
-//                "http://www.publicbooks.org/tag/the-big-picture/feed"
+                //"https://antonioleiva.com/feed/",
+                //"https://blog.jetbrains.com/kotlin/feed/",
+                "https://meduza.io/rss/all",
+                "https://www.buzzfeed.com/world.xml",
+                "http://rss.cnn.com/rss/edition_world.rss",
+                "http://yahoo.com/news/rss/world",
+                "http://www.publicbooks.org/tag/the-big-picture/feed"
             ).forEach {
                 //feedRepository.addFeed(it)
             }

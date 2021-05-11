@@ -8,5 +8,5 @@ data class Item(
     val description: String = "",
     val imageUrl: String = "",
     val link: String = "",
-    val datetime: Long = 0
+    val datetime: String = ""
 )
