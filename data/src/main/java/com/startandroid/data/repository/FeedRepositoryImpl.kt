@@ -6,8 +6,6 @@ import androidx.room.withTransaction
 import com.startandroid.data.api.FeedApi
 import com.startandroid.data.api.FeedServiceApi
 import com.startandroid.data.db.AppDatabase
-import com.startandroid.data.db.FeedDao
-import com.startandroid.data.db.ItemDao
 import com.startandroid.data.mapping.FeedMapperApiToDb
 import com.startandroid.data.mapping.FeedMapperApiToUi
 import com.startandroid.data.mapping.ItemMapperApiToDb
@@ -37,8 +35,27 @@ class FeedRepositoryImpl(
         return itemMapperApiToUi.mapList(feedApi.channel.itemList)
     }
 
-    override suspend fun addFeed(url: String) {
-        Log.d("qweee", "addFeed $url")
+    override suspend fun refreshItems() {
+
+        val feedList = appDatabase.feedDao().getFeedList()
+
+        feedList.forEach {
+            try {
+                refreshFeedItems(it.url)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // TODO update feed status
+            }
+        }
+    }
+
+    private suspend fun refreshFeedItems(url: String) {
+        val feed = feedServiceApi.fetchFeed(url)
+        val items = itemMapperApiToDb.mapList(feed.channel.itemList)
+        appDatabase.itemDao().upsertAll(items)
+    }
+
+    override suspend fun addFeedWithItems(url: String) {
         val feedApi = fetchOrGetCachedFeed(url)
 
         val feedDb = feedMapperApiToDb.map(feedApi)
@@ -46,20 +63,14 @@ class FeedRepositoryImpl(
         val itemsDb = itemMapperApiToDb.mapList(feedApi.channel.itemList).map { it.copy(feedUrl = url) }
 
         appDatabase.withTransaction {
-            Log.d("qweee", "feedDb $feedDb")
             appDatabase.feedDao().insert(feedDb)
-            appDatabase.itemDao().insertAll(itemsDb)
-            Log.d("qweee", "items inserted")
+            appDatabase.itemDao().upsertAll(itemsDb)
         }
 
     }
 
     override fun getFeedList(): Flow<List<Feed>> {
-        return appDatabase.feedDao().getFeedList()
-    }
-
-    override suspend fun removeItem(link: String) {
-        appDatabase.itemDao().delete(link)
+        return appDatabase.feedDao().getFeedListFlow()
     }
 
     override fun getFeedCount(): Flow<Int> {

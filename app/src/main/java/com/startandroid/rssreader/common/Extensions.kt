@@ -15,7 +15,6 @@ import kotlinx.serialization.json.Json
 fun <T> Flow<T>.collectIn(lifecycleOwner: LifecycleOwner, minimalState: Lifecycle.State = Lifecycle.State.INITIALIZED, action: suspend (value:T) -> Unit) {
     lifecycleOwner.lifecycleScope.launch {
         collect {
-            Log.d("qweee", "collect $it ${lifecycleOwner.lifecycle.currentState}")
             if (lifecycleOwner.lifecycle.currentState.isAtLeast(minimalState)) {
                 action.invoke(it)
             }

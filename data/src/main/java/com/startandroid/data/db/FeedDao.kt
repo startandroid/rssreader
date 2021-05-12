@@ -11,7 +11,10 @@ interface FeedDao {
     suspend fun insert(feed: FeedDb)
 
     @Query("SELECT * FROM feeds")
-    fun getFeedList(): Flow<List<Feed>>
+    fun getFeedListFlow(): Flow<List<Feed>>
+
+    @Query("SELECT * FROM feeds")
+    fun getFeedList(): List<Feed>
 
     @Query("SELECT COUNT(*) FROM feeds")
     fun getFeedCount(): Flow<Int>

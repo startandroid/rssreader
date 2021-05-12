@@ -53,6 +53,9 @@ dependencies {
     kapt room.roomCompiler
     implementation room.roomKtx
     implementation paging.pagingRuntime
+    implementation work.workRuntimeKtx
+    //implementation androidxHilt.hiltWork
+    //kapt androidxHilt.hiltCompiler
 
     testImplementation junit.junit
     androidTestImplementation testExt.junit

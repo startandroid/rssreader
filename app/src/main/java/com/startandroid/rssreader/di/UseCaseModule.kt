@@ -1,10 +1,7 @@
 package com.startandroid.rssreader.di
 
 import com.startandroid.domain.repository.FeedRepository
-import com.startandroid.domain.usecase.AddFeedUseCase
-import com.startandroid.domain.usecase.FetchFeedUseCase
-import com.startandroid.domain.usecase.FetchItemsUseCase
-import com.startandroid.domain.usecase.GetFeedListUseCase
+import com.startandroid.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +29,11 @@ class UseCaseModule {
     @Provides
     fun provideGetFeedListUseCase(feedRepository: FeedRepository): GetFeedListUseCase {
         return GetFeedListUseCase(feedRepository)
+    }
+
+    @Provides
+    fun provideRefreshItemsUseCase(feedRepository: FeedRepository): RefreshItemsUseCase {
+        return RefreshItemsUseCase(feedRepository)
     }
 
 }

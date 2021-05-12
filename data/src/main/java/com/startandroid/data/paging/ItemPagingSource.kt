@@ -18,7 +18,6 @@ import javax.inject.Inject
 class ItemPagingSource @Inject constructor (private val itemDao: ItemDao, private val feedDao: FeedDao): PagingSource<Long, ItemDb>() {
 
     init {
-        Log.d("qweee", "PagingSource init")
         MainScope().launch {
             feedDao.getFeedCount()
                 .distinctUntilChanged()
@@ -34,7 +33,6 @@ class ItemPagingSource @Inject constructor (private val itemDao: ItemDao, privat
     override suspend fun load(params: LoadParams<Long>): LoadResult<Long, ItemDb> {
         val startDatetime = params.key ?: Date().time
         val data = itemDao.getLimitedAfterDatetime(startDatetime, params.loadSize)
-        Log.d("qweee", "startDatetime $startDatetime")
         return LoadResult.Page(
             data = data,
             prevKey = null,
