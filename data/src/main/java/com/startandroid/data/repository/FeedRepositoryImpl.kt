@@ -36,7 +36,7 @@ class FeedRepositoryImpl(
     }
 
     override suspend fun refreshItems() {
-
+        Log.d("qweee", "refreshItems")
         val feedList = appDatabase.feedDao().getFeedList()
 
         feedList.forEach {

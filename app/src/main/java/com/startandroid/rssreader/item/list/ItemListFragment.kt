@@ -46,6 +46,11 @@ class ItemListFragment : Fragment() {
             itemListViewModel.onFeedsClick()
         }
 
+        binding?.swipeRefresh?.setOnRefreshListener {
+            itemListViewModel.onRefreshSwiped()
+            binding?.swipeRefresh?.isRefreshing = false
+        }
+
         binding?.recyclerViewData?.run {
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(

@@ -11,10 +11,7 @@ import com.startandroid.domain.usecase.RefreshItemsUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
-//@HiltWorker
-class RefreshItemsWorker
-//@AssistedInject
-constructor(
+class RefreshItemsWorker(
     context: Context,
     params: WorkerParameters,
     private val refreshItemsUseCase: RefreshItemsUseCase

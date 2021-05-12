@@ -15,23 +15,11 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-class ItemPagingSource @Inject constructor (private val itemDao: ItemDao, private val feedDao: FeedDao): PagingSource<Long, ItemDb>() {
-
-    init {
-        MainScope().launch {
-            feedDao.getFeedCount()
-                .distinctUntilChanged()
-                .drop(1)
-                .collect {
-                    invalidate()
-                    cancel()
-                }
-        }
-
-    }
+class ItemPagingSource @Inject constructor (private val itemDao: ItemDao): PagingSource<Long, ItemDb>() {
 
     override suspend fun load(params: LoadParams<Long>): LoadResult<Long, ItemDb> {
         val startDatetime = params.key ?: Date().time
+        Log.d("qweee", " load $startDatetime ${params.key}")
         val data = itemDao.getLimitedAfterDatetime(startDatetime, params.loadSize)
         return LoadResult.Page(
             data = data,
