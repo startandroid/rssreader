@@ -72,5 +72,8 @@ dependencies {
 
     testImplementation junit.junit
     androidTestImplementation testExt.junit
-    androidTestImplementation espresso.espressoCore
+    //androidTestImplementation espresso.espressoCore
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test:rules:1.4.0'
 }
