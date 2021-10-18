@@ -8,6 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import org.hamcrest.CoreMatchers.not
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -41,6 +42,6 @@ class ExampleInstrumentedTest {
         onView(withId(R.id.fabFeeds)).perform(click())
         onView(withId(R.id.fabAdd)).check(matches(isDisplayed()))
         onView(withId(R.id.fabAdd)).perform(click())
-        onView(withId(R.id.buttonCheck)).check(matches(isDisplayed()))
+        onView(withId(R.id.buttonCheck)).check(matches(not(isDisplayed())))
     }
 }
