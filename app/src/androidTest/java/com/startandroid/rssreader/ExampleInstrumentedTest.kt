@@ -42,6 +42,6 @@ class ExampleInstrumentedTest {
         onView(withId(R.id.fabFeeds)).perform(click())
         onView(withId(R.id.fabAdd)).check(matches(isDisplayed()))
         onView(withId(R.id.fabAdd)).perform(click())
-        onView(withId(R.id.buttonCheck)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.buttonCheck)).check(matches(isDisplayed()))
     }
 }
